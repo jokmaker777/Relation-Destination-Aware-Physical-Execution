@@ -1,0 +1,85 @@
+{
+  "output_root": "/path/to/artifact_workspace/sigmod2027/industrial",
+  "gpu_ids": [0, 1, 2, 3],
+  "base_seed": 20261003,
+  "epochs": 10,
+  "labeled_relations": [
+    "inventory__to__virtual",
+    "inventory__to_transport_labeled__inventory"
+  ],
+  "graphs": [
+    {
+      "name": "20241213",
+      "path": "/path/to/artifact_workspace/cache/graph_20241213.pkl",
+      "total_labeled_edges": 5421825
+    },
+    {
+      "name": "20241214",
+      "path": "/path/to/artifact_workspace/cache/graph_20241214.pkl",
+      "total_labeled_edges": 5353896
+    },
+    {
+      "name": "20241215",
+      "path": "/path/to/artifact_workspace/cache/graph_20241215.pkl",
+      "total_labeled_edges": 5061841
+    },
+    {
+      "name": "20241217",
+      "path": "/path/to/artifact_workspace/cache/graph_20241217.pkl",
+      "total_labeled_edges": 5049681
+    },
+    {
+      "name": "20241218",
+      "path": "/path/to/artifact_workspace/cache/graph_20241218.pkl",
+      "total_labeled_edges": 5432764
+    }
+  ],
+  "sweeps": [
+    {
+      "name": "scale_primary",
+      "graphs": ["20241213", "20241214", "20241215", "20241217", "20241218"],
+      "gpu_counts": [1, 2, 3, 4],
+      "strategies": ["balanced_edge", "superblock_edge_count", "superblock_vector_balance"],
+      "block_edges": [25000],
+      "modes": [
+        {"name": "blocking_c1", "chunks": 1, "overlap": false},
+        {"name": "async_chunk_4", "chunks": 4, "overlap": true}
+      ],
+      "repeats": [1, 2, 3],
+      "epochs": 10
+    },
+    {
+      "name": "joint_tuning_4gpu",
+      "graphs": ["20241213", "20241214", "20241215"],
+      "gpu_counts": [4],
+      "strategies": ["superblock_edge_count", "superblock_vector_balance"],
+      "block_edges": [10000, 25000, 50000, 100000],
+      "modes": [
+        {"name": "blocking_c1", "chunks": 1, "overlap": false},
+        {"name": "blocking_c4", "chunks": 4, "overlap": false},
+        {"name": "async_chunk_2", "chunks": 2, "overlap": true},
+        {"name": "async_chunk_4", "chunks": 4, "overlap": true},
+        {"name": "async_chunk_8", "chunks": 8, "overlap": true}
+      ],
+      "repeats": [1, 2, 3],
+      "epochs": 10
+    },
+    {
+      "name": "joint_validation_4gpu",
+      "graphs": ["20241217", "20241218"],
+      "gpu_counts": [4],
+      "strategies": ["superblock_edge_count", "superblock_vector_balance"],
+      "block_edges": [10000, 25000, 50000, 100000],
+      "modes": [
+        {"name": "blocking_c1", "chunks": 1, "overlap": false},
+        {"name": "blocking_c4", "chunks": 4, "overlap": false},
+        {"name": "async_chunk_2", "chunks": 2, "overlap": true},
+        {"name": "async_chunk_4", "chunks": 4, "overlap": true},
+        {"name": "async_chunk_8", "chunks": 8, "overlap": true}
+      ],
+      "repeats": [1, 2, 3],
+      "epochs": 10
+    }
+  ]
+}
+

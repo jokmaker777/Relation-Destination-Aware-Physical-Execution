@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.idea/
+*.py[cod]
+*.log
+*.tmp
+outputs/
+results/
+private_data/
+cache/
+public_datasets/
+

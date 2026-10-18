@@ -1,0 +1,77 @@
+{
+  "output_root": "/path/to/artifact_workspace/sigmod2027/operator_sensitivity",
+  "gpu_ids": [0, 1, 2, 3],
+  "master_port_base": 30610,
+  "datasets": [
+    {
+      "name": "synthetic-uniform-1m",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "validate_correctness": true,
+      "options": {
+        "num_src": 100000,
+        "num_dst": 100000,
+        "num_edges": 1000000,
+        "num_relations": 3,
+        "skew": 0.0,
+        "seed": 20261003
+      }
+    },
+    {
+      "name": "synthetic-skewed-1m",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "validate_correctness": true,
+      "options": {
+        "num_src": 100000,
+        "num_dst": 100000,
+        "num_edges": 1000000,
+        "num_relations": 3,
+        "skew": 2.0,
+        "seed": 20261003
+      }
+    },
+    {
+      "name": "synthetic-skewed-10m",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "options": {
+        "num_src": 500000,
+        "num_dst": 500000,
+        "num_edges": 10000000,
+        "num_relations": 3,
+        "skew": 2.0,
+        "seed": 20261003
+      }
+    },
+    {
+      "name": "synthetic-eight-relations",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "options": {
+        "num_src": 200000,
+        "num_dst": 200000,
+        "num_edges": 4000000,
+        "num_relations": 8,
+        "skew": 1.5,
+        "seed": 20261003
+      }
+    }
+  ],
+  "gpu_counts": [1, 4],
+  "matrix": {
+    "policies": ["superblock_greedy"],
+    "block_edges": [25000],
+    "chunks": [1, 4],
+    "blocking_chunks": [4],
+    "aggregations": ["mean"],
+    "hidden_dims": [32, 64]
+  },
+  "benchmark": {
+    "warmups": 2,
+    "repeats": 5,
+    "seed": 20261003,
+    "correctness_max_edges": 2000000
+  }
+}
+

@@ -1,0 +1,69 @@
+{
+  "output_root": "/path/to/artifact_workspace/sigmod2027/operator",
+  "gpu_ids": [0, 1, 2, 3],
+  "master_port_base": 29610,
+  "datasets": [
+    {
+      "name": "ogbn-mag",
+      "kind": "ogbn-mag",
+      "root": "/path/to/artifact_workspace/public_datasets/ogb",
+      "relation_selector": "topk:3"
+    },
+    {
+      "name": "hgb-dblp",
+      "kind": "hgb-dblp",
+      "root": "/path/to/artifact_workspace/public_datasets/hgb",
+      "relation_selector": "topk:3"
+    },
+    {
+      "name": "synthetic-uniform",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "validate_correctness": true,
+      "options": {
+        "num_src": 100000,
+        "num_dst": 100000,
+        "num_edges": 1000000,
+        "num_relations": 3,
+        "skew": 0.0,
+        "seed": 20261003
+      }
+    },
+    {
+      "name": "synthetic-skewed",
+      "kind": "synthetic",
+      "relation_selector": "all",
+      "validate_correctness": true,
+      "options": {
+        "num_src": 100000,
+        "num_dst": 100000,
+        "num_edges": 1000000,
+        "num_relations": 3,
+        "skew": 2.0,
+        "seed": 20261003
+      }
+    }
+  ],
+  "gpu_counts": [1, 2, 3, 4],
+  "matrix": {
+    "policies": [
+      "contiguous",
+      "round_robin",
+      "destination_hash",
+      "destination_greedy",
+      "superblock_greedy"
+    ],
+    "block_edges": [10000, 25000, 50000, 100000],
+    "chunks": [1, 2, 4, 8],
+    "blocking_chunks": [4],
+    "aggregations": ["mean"],
+    "hidden_dims": [32]
+  },
+  "benchmark": {
+    "warmups": 2,
+    "repeats": 5,
+    "seed": 20261003,
+    "correctness_max_edges": 2000000
+  }
+}
+
